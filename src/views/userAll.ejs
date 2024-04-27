@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>halo dari userAll</title>
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+    <h1>userAll</h1>
+        <% userList.forEach(user => { %>
+            <li><a href="/user/byId/<%= user.id %>">
+                id : <%= user.id %> - nama : <%= user.nama %>
+                </a>
+            </li>
+        <% }) %>
+    </body>
+</html>
