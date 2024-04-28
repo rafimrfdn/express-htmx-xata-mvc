@@ -1,8 +1,5 @@
-//const User = require('../models/user');
-//const xataService = require('../services/xataService'); // Assuming xataService exists
-
-import { User } from '../models/user';
-import xataService from '../services/xataService';
+const User = require('../models/user');
+const xataService = require('../services/xataService'); // Assuming xataService exists
 
 exports.createUser = async (req, res) => {
   try {
@@ -21,3 +18,15 @@ exports.createUser = async (req, res) => {
     res.status(500).json({ message: 'Internal server error.' });
   }
 };
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await xataService.getAllUsers();
+    res.json({ users });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+};
+
+

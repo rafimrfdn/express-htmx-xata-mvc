@@ -6,6 +6,4 @@ class User {
   }
 }
 
-// module.exports = User;
-
-export { User }
+module.exports = User;
