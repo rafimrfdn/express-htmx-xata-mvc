@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>halo dari userAll</title>
+        <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+    </head>
+    <body>
+    <h1>userAll</h1>
+<!--        <% userList.forEach(user => { %>
+            <li><a href="/user/byId/<%= user.id %>">
+                id : <%= user.id %> - nama : <%= user.nama %>
+                </a>
+            </li>
+        <% }) %>-->
+
+
+<!--  <div id="userData"></div>-->
+
+        <table> 
+            <thead> 
+                <tr> 
+                    <td>nama</td>
+                    <td>email</td>
+                    <td>password</td>
+                </tr>
+            </thead> 
+            <tbody id="userData">
+            </tbody>
+        </table>
+
+
+
+  <h1>Xata Data Input</h1>
+  <!-- HTMX form for inputting data -->
+  <form id="userDataForm" hx-post="https://muhammad-rafiuddin-s-workspace-beligo.us-east-1.xata.sh/db/express-fullstack:main/tables/Users/data" hx-target="#userData" hx-swap="outerHTML">
+    <label for="nama">Name:</label><br>
+    <input type="text" id="nama" name="nama"><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+    <label for="password">Password:</label><br>
+    <input type="password" id="password" name="password"><br><br>
+    <button type="submit">Submit</button>
+  </form>
+
+    </body>
+
+    <script>
+const options = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer xau_oc2D7nDBFHIShvfsAfuZiFJOZEGBpuYe4',
+        'Content-Type': 'application/json'
+      },
+      body: '{"columns":["nama","email","password"],"page":{"size":15}}'
+    };
+
+    fetch('https://muhammad-rafiuddin-s-workspace-beligo.us-east-1.xata.sh/db/express-fullstack:main/tables/Users/query', options)
+      .then(response => response.json())
+      .then(response => {
+        const userDataContainer = document.getElementById('userData');
+        userDataContainer.innerHTML = '<tr>';
+        response.records.forEach(user => {
+          userDataContainer.innerHTML += `<tr>
+          <td>${user.nama}</td> 
+          <td>${user.email}</td> 
+          <td>${user.password}</td> 
+          </tr>
+          `;
+        });
+         userDataContainer.innerHTML += '</tr>';
+      })
+      .catch(err => console.error(err));
+
+
+    </script>
+
+</html>

@@ -1,18 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>halo dari userAll</title>
-        <link href="css/style.css" rel="stylesheet">
-    </head>
-    <body>
-    <h1>userAll</h1>
-        <% userList.forEach(user => { %>
-            <li><a href="/user/byId/<%= user.id %>">
-                id : <%= user.id %> - nama : <%= user.nama %>
-                </a>
-            </li>
-        <% }) %>
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add New User</title>
+</head>
+<body>
+
+ <h1>Create User</h1>
+  <form hx-target="#result" hx-post="/user/insert-user">
+    <label for="nama">Name:</label>
+    <input type="text" name="nama" id="nama" placeholder="Enter your name">
+    <br>
+    <label for="email">Email:</label>
+    <input type="email" name="email" id="email" placeholder="Enter your email">
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" placeholder="Enter your password">
+    <br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+<div hx-get="/getall" hx-trigger="load" id="getall"></div>
+
+  <!-- Include htmx library -->
+    <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+</body>
 </html>
