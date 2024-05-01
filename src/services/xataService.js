@@ -12,7 +12,6 @@ const insertUser = async (user) => {
     body: JSON.stringify(user)
   };
 
-  // const response = await fetch('https://muhammad-rafiuddin-s-workspace-beligo.us-east-1.xata.sh/db/express-fullstack:main/tables/Users/data?columns=id', options);
   const response = await fetch(`${process.env.XATA_DATABASE_URL}/data?columns=id`, options);
   return response;
 }
@@ -32,7 +31,6 @@ const fetchAllUsers = async () => {
   };
 
   try {
-    // const response = await fetch('https://muhammad-rafiuddin-s-workspace-beligo.us-east-1.xata.sh/db/express-fullstack:main/tables/Users/query', options);
     const response = await fetch(`${process.env.XATA_DATABASE_URL}/query`, options);
     if (!response.ok) {
       throw new Error(`Failed to get users: ${await response.text()}`); // Throw an error with details
@@ -53,8 +51,6 @@ const fetchUserById = async (id) => {
     }
   };
 
-  // const response = await fetch(`https://muhammad-rafiuddin-s-workspace-beligo.us-east-1.xata.sh/db/express-fullstack:main/tables/Users/${id}`, options);
-    // const response = await fetch(`https://muhammad-rafiuddin-s-workspace-beligo.us-east-1.xata.sh/db/express-fullstack:main/tables/Users/data/${id}`, options)
     const response = await fetch(`${process.env.XATA_DATABASE_URL}/data/${id}`, options);
   if (!response.ok) {
     throw new Error(`Failed to get user: ${await response.text()}`);
@@ -73,7 +69,7 @@ const updateExistingUser = async (id, updateData) => {
     body: JSON.stringify(updateData)
   };
 
-  // const response = await fetch(`https://muhammad-rafiuddin-s-workspace-beligo.us-east-1.xata.sh/db/express-fullstack:main/tables/Users/data/${id}?columns=id`, options);
+
     const response = await fetch(`${process.env.XATA_DATABASE_URL}/data/${id}?columns=id`, options);
   return response;
 }
@@ -89,11 +85,10 @@ const removeUser = async (id) => {
     }
   };
 
-  // const response = await fetch(`https://muhammad-rafiuddin-s-workspace-beligo.us-east-1.xata.sh/db/express-fullstack:main/tables/Users/data/${id}?columns=id`, options);
+
     const response = await fetch(`${process.env.XATA_DATABASE_URL}/data/${id}?columns=id`, options);
   return response;
 }
 
 
 export { insertUser, fetchAllUsers, updateExistingUser, fetchUserById, removeUser };
-//export default xataService;

@@ -1,8 +1,4 @@
-//const express = require('express');
-//const userController = require('../controllers/userController');
-
 import express from 'express';
-//import userController from '../controllers/userController';
 
 import { createUser, 
     getAllUsers, 
@@ -21,8 +17,6 @@ router.get('/users/:id/edit', getUserForUpdate);  // Route to get user for updat
 router.patch('/users/:id', updateUser); // Update user route
 
 router.delete('/users/:id', deleteUser); // Delete user route
-
-//module.exports = router;
 
 export default router ;
 
