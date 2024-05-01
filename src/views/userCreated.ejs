@@ -7,9 +7,17 @@
 </head>
 <body>
   <h1>Success!</h1>
-  <p><%= message %></p>
-  <% if (userId) { %>
-    <p>User ID: <%= userId %></p>
-  <% } %>
+  <!-- <p><%= message %></p> -->
+  <!-- <% if (userId) { %> -->
+  <!--   <p>User ID: <%= userId %></p> -->
+  <!-- <% } %> -->
+          <tr >
+            <td><a hx-get="/users/users/<%= user.id %>/edit" hx-target="#update"><%= user.id %></a></td>
+            <td><%= user.nama %></td>
+            <td><%= user.email %></td>
+            <!-- <td><a hx-delete="/users/users/<%= user.id %>" hx-target="closest tr" hx-swap="outerHTML" >Delete <%= user.nama %></a></td> -->
+            <!-- <td hx-confirm="Are you sure?" hx-target="closest tr" hx-swap="outerHTML swap:1s"><a hx-delete="/users/users/<%= user.id %>"  >Delete <%= user.nama %></a></td> -->
+            <td><a hx-get="/users/users/<%= user.id %>/delete" hx-target="closest tr" hx-swap="innerHTML" >Delete <%= user.nama %></a></td>
+          </tr>
 </body>
 </html>

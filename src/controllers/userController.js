@@ -8,7 +8,10 @@ exports.createUser = async (req, res) => {
 
     const response = await xataService.insertUser(user);
     if (response.ok) {
-      res.json({ message: 'User created successfully!', userId: response.id });
+      // res.json({ message: 'User created successfully!', userId: response.id });
+       //res.json();
+       //res.render("userCreated", {user});
+       res.redirect(`/`);
     } else {
       console.error('Error creating user:', await response.json());
       res.status(response.status).json({ message: 'An error occurred.' });
@@ -70,6 +73,22 @@ exports.updateUser = async (req, res) => {
   }
 };
 
+exports.confirmdelete = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const user = await xataService.fetchUserById(id); // Use getUserById function
+    if (user) {
+      res.render('delete-user', { user }); // Render update-user.ejs with user data
+    } else {
+      res.status(404).render('error', { message: 'User not found.' });
+    }
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).render('error', { message: 'Internal server error.' });
+  }
+};
+
 exports.deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -77,6 +96,7 @@ exports.deleteUser = async (req, res) => {
     if (response.ok) {
       //res.json({ message: 'User deleted successfully!' });
       res.json();
+      // res.render('delete-user', { response }); 
     } else {
       console.error('Error deleting user:', await response.json());
       res.status(response.status).json({ message: 'An error occurred.' });

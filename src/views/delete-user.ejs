@@ -7,14 +7,17 @@
   <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 </head>
 <body>
-  <h1>Delete User</h1>
+        <tr>
   <% if (user) { %>
-    <p>Are you sure you want to delete user "<%= user.nama %>" (<%= user.email %>) ?</p>
-    <form hx-delete="/users/users/<%= user.id %>" hx-target="closest tr" method="DELETE">
-      <button type="submit">Delete User</button>
-    </form>
+    <!-- <p>Are you sure you want to delete user "<%= user.nama %>" (<%= user.email %>) ?</p> -->
+    <span>Are you sure you want to delete user "<%= user.nama %>" (<%= user.email %>) ?</span>
+    <!-- <form hx-delete="/users/users/<%= user.id %>" hx-target="closest tr" method="DELETE"> -->
+    <!--   <button type="submit">Delete User</button> -->
+    <!-- </form> -->
+    <button hx-delete="/users/users/<%= user.id %>" hx-target="closest tr" method="DELETE" type="submit">Delete User</button>
   <% } else { %>
     <p>User not found.</p>
   <% } %>
+        </tr>
 </body>
 </html>
