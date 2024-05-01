@@ -22,7 +22,7 @@ exports.createUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await xataService.getAllUsers();
+    const users = await xataService.fetchAllUsers();
     // console.log('users:', users); // Log the users data
     return res.render('userAll', { users });
     //return res.send('userAll', { users });
@@ -37,7 +37,7 @@ exports.getUserForUpdate = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const user = await xataService.getUserById(id); // Use getUserById function
+    const user = await xataService.fetchUserById(id); // Use getUserById function
     if (user) {
       res.render('update-user', { user }); // Render update-user.ejs with user data
     } else {
@@ -56,7 +56,7 @@ exports.updateUser = async (req, res) => {
     const { nama, email } = req.body;
     const updateData = { nama, email };
 
-    const response = await xataService.updateUser(id, updateData);
+    const response = await xataService.updateExistingUser(id, updateData);
     if (response.ok) {
       // res.redirect(`/users/users/${id}`);
       res.send(`data dengan id ${id} berhasil update dengan nama: ${nama} dan email: ${email}`)
@@ -73,9 +73,10 @@ exports.updateUser = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const response = await xataService.deleteUser(id);
+    const response = await xataService.removeUser(id);
     if (response.ok) {
-      res.json({ message: 'User deleted successfully!' });
+      //res.json({ message: 'User deleted successfully!' });
+      res.json();
     } else {
       console.error('Error deleting user:', await response.json());
       res.status(response.status).json({ message: 'An error occurred.' });
