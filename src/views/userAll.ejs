@@ -3,28 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>List All of Users</title>
+  <title>All Users</title>
 </head>
 <body>
-  <h1>All users</h1>
-<h1>User Data</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Password</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% userData.forEach(function(user) { %>
+  <h1>All Users</h1>
+<% if (users && users.records && users.records.length > 0) { %>
+    <table>
+      <thead>
         <tr>
-          <td><%= user.nama %></td>
-          <td><%= user.email %></td>
-          <td><%= user.password %></td>
-        </tr>
-      <% }); %>
-    </tbody>
-  </table>
+          <th>ID</th>
+          <th>Nama</th>
+          <th>Email</th>
+          <th>Action</th>
+          </tr>
+      </thead>
+      <tbody>
+        <% for (const user of users.records) { %>
+          <tr>
+            <td><a hx-get="/users/users/<%= user.id %>/edit" hx-target="#update"><%= user.id %></a></td>
+            <td><%= user.nama %></td>
+            <td><%= user.email %></td>
+            <td><a hx-delete="/users/users/<%= user.id %>" hx-target="closest tr" hx-swap="outerHTML" >Delete <%= user.nama %></a></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>No users found.</p>
+  <% } %>
 </body>
 </html>

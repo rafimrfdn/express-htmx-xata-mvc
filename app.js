@@ -31,10 +31,6 @@ const app = express();
 
 const port = process.env.PORT || 3000;
 
-// Set view engine to EJS
-//app.set('views', path.join(__dirname, 'views'));
-app.set("views", path.resolve("./src/views"));
-app.set('view engine', 'ejs');
 
 // Use body-parser middleware to parse incoming JSON data
 app.use(bodyParser.json());
@@ -52,6 +48,12 @@ app.use(express.static(path.resolve('./src/public')));
 app.get('*', (req, res) => {
   res.render('index'); // Replace with your actual index.html file name if it's different
 });
+
+// Set view engine to EJS
+//app.set('views', path.join(__dirname, './src/views'));
+app.set('view engine', 'ejs');
+app.set("views", path.resolve("./src/views"));
+
 
 // Error handling middleware (optional)
 app.use((err, req, res, next) => {
