@@ -69,7 +69,9 @@ const deleteUser = async (req, res) => {
     const { id } = req.params;
     const response = await removeUser(id);
     if (response.ok) {
-      res.json({ message: 'User deleted successfully!' });
+      // res.json({ message: 'User deleted successfully!' });
+      res.json();
+      // res.redirect("/users/all");
     } else {
       console.error('Error deleting user:', await response.json());
       res.status(response.status).json({ message: 'An error occurred.' });
