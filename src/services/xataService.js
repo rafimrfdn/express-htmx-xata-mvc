@@ -1,9 +1,8 @@
-//const fetch = require('node-fetch');
+import dotenv from 'dotenv';
+dotenv.config();
 
-const xataApiKey = 'xau_2WWywKSiOweq3EOkvZJOnAHnWMpfJpP90'; // Replace with your actual Xata API key
-require('dotenv').config();
 
-async function insertUser(user) {
+const insertUser = async (user) => {
   const options = {
     method: 'POST',
     headers: {
@@ -19,11 +18,11 @@ async function insertUser(user) {
 }
 
 
-async function getAllUsers() { // Changed name to plural for consistency
+const fetchAllUsers = async () => {
   const options = {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${xataApiKey}`,
+      Authorization: `Bearer ${process.env.XATA_API_KEY}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
@@ -45,11 +44,11 @@ async function getAllUsers() { // Changed name to plural for consistency
   }
 }
 
-async function getUserById(id) {
+const fetchUserById = async (id) => {
   const options = {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${xataApiKey}`,
+      Authorization: `Bearer ${process.env.XATA_API_KEY}`,
       'Content-Type': 'application/json'
     }
   };
@@ -64,11 +63,11 @@ async function getUserById(id) {
 }
 
 
-async function updateUser(id, updateData) {
+const updateExistingUser = async (id, updateData) => {
   const options = {
     method: 'PATCH',
     headers: {
-      Authorization: `Bearer ${xataApiKey}`,
+      Authorization: `Bearer ${process.env.XATA_API_KEY}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(updateData)
@@ -81,11 +80,11 @@ async function updateUser(id, updateData) {
 
 
 
-async function deleteUser(id) {
+const removeUser = async (id) => {
   const options = {
     method: 'DELETE',
     headers: {
-      Authorization: `Bearer ${xataApiKey}`,
+      Authorization: `Bearer ${process.env.XATA_API_KEY}`,
       'Content-Type': 'application/json'
     }
   };
@@ -95,8 +94,6 @@ async function deleteUser(id) {
   return response;
 }
 
-module.exports.insertUser = insertUser;
-module.exports.getAllUsers = getAllUsers;
-module.exports.updateUser = updateUser;
-module.exports.getUserById = getUserById;
-module.exports.deleteUser = deleteUser;
+
+export { insertUser, fetchAllUsers, updateExistingUser, fetchUserById, removeUser };
+//export default xataService;

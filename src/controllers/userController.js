@@ -1,12 +1,12 @@
-const User = require('../models/user');
-const xataService = require('../services/xataService'); // Assuming xataService exists
+import User from '../models/user.js';
+import { insertUser, fetchAllUsers, updateExistingUser, fetchUserById, removeUser } from '../services/xataService.js';
 
-exports.createUser = async (req, res) => {
+const createUser = async (req, res) => {
   try {
     const { nama, email, password } = req.body;
     const user = new User(nama, email, password);
 
-    const response = await xataService.insertUser(user);
+    const response = await insertUser(user);
     if (response.ok) {
       res.json({ message: 'User created successfully!', userId: response.id });
     } else {
@@ -19,27 +19,23 @@ exports.createUser = async (req, res) => {
   }
 };
 
-
-exports.getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => {
   try {
-    const users = await xataService.getAllUsers();
-    // console.log('users:', users); // Log the users data
+    const users = await fetchAllUsers();
     return res.render('userAll', { users });
-    //return res.send('userAll', { users });
   } catch (error) {
     console.error('Error fetching users:', error);
     res.status(500).render('error', { message: 'Internal server error.' });
   }
 };
 
-
-exports.getUserForUpdate = async (req, res) => {
+const getUserForUpdate = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const user = await xataService.getUserById(id); // Use getUserById function
+    const user = await fetchUserById(id);
     if (user) {
-      res.render('update-user', { user }); // Render update-user.ejs with user data
+      res.render('update-user', { user });
     } else {
       res.status(404).render('error', { message: 'User not found.' });
     }
@@ -49,17 +45,15 @@ exports.getUserForUpdate = async (req, res) => {
   }
 };
 
-
-exports.updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
-    const { id } = req.params; // Extract user ID from URL params
+    const { id } = req.params;
     const { nama, email } = req.body;
     const updateData = { nama, email };
 
-    const response = await xataService.updateUser(id, updateData);
+    const response = await updateExistingUser(id, updateData);
     if (response.ok) {
-      // res.redirect(`/users/users/${id}`);
-      res.send(`data dengan id ${id} berhasil update dengan nama: ${nama} dan email: ${email}`)
+      res.send(`Data with id ${id} successfully updated with name: ${nama} and email: ${email}`);
     } else {
       console.error('Error updating user:', await response.text());
       res.status(response.status).json({ message: 'An error occurred.' });
@@ -70,10 +64,10 @@ exports.updateUser = async (req, res) => {
   }
 };
 
-exports.deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const response = await xataService.deleteUser(id);
+    const response = await removeUser(id);
     if (response.ok) {
       res.json({ message: 'User deleted successfully!' });
     } else {
@@ -86,4 +80,4 @@ exports.deleteUser = async (req, res) => {
   }
 };
 
-
+export { createUser, getAllUsers, getUserForUpdate, updateUser, deleteUser };
